@@ -3,18 +3,15 @@ package com.project.todolist.controller;
 
 import com.project.todolist.model.Task;
 import com.project.todolist.model.TaskRepository;
-import org.aspectj.apache.bcel.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,5 +35,29 @@ public class TaskController {
     {
         logger.info("Custrom pegeable");
         return ResponseEntity.ok(repository.findAll(page).getContent());
+    }
+
+    @PutMapping("/tasks/{id}")
+    ResponseEntity<?> updateTask(@PathVariable("id") int taskId,  @RequestBody @Valid  Task toUpdate)
+    {
+        if(!repository.existsById(taskId)) {
+          return  ResponseEntity.notFound().build();
+        }
+        toUpdate.setId(taskId);
+        repository.save(toUpdate);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/tasks/{id}")
+    ResponseEntity<?> getTask(@PathVariable("id") int taskId)
+    {
+        return repository.findById(taskId).map(task -> ResponseEntity.ok(task)).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/tasks")
+    ResponseEntity<?> createTask( @RequestBody @Valid  Task toCreate)
+    {
+    Task result = repository.save(toCreate);
+    return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 }
