@@ -13,8 +13,8 @@ import javax.validation.constraints.NotBlank;
     private String description;
     private boolean done;
 
-    Task()
-    {}
+     Task() {
+    }
 
     public int getId() {
         return id;
