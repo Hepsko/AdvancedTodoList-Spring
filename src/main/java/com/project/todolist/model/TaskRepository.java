@@ -17,7 +17,7 @@ import java.util.Optional;
 
     Task save(Task entity);
 
-    List<Task> findByDone(@Param("state") boolean done);
+    List<Task> findByDone( boolean done);
 
     boolean existsById(Integer id);
  }
