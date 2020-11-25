@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
     private String description;
     private boolean done;
     private LocalDateTime deadline;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
 
     Task() {
@@ -23,7 +25,7 @@ import java.time.LocalDateTime;
         return id;
     }
 
-    public void setId(int id) {
+     void setId(int id) {
         this.id = id;
     }
 
@@ -51,4 +53,20 @@ import java.time.LocalDateTime;
         this.deadline = deadline;
     }
 
+    public void updateFrom(final Task source)
+        {
+            description=source.description;
+            done=source.done;
+            deadline=source.deadline;
+        }
+    @PrePersist
+    void prePersis(){
+        createdOn = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void preMerge()
+    {
+        updatedOn=LocalDateTime.now();
+    }
 }
