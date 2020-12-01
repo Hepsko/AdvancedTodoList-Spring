@@ -20,4 +20,7 @@ import java.util.Optional;
     List<Task> findByDone( boolean done);
 
     boolean existsById(Integer id);
+
+     boolean existsByDoneIsFalseAndGroup_Id(Integer groupId);
+
  }
