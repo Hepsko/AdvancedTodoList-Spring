@@ -19,7 +19,7 @@ import java.util.Set;
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
-    TaskGroup() {
+   public TaskGroup() {
     }
 
     public int getId() {
@@ -34,7 +34,7 @@ import java.util.Set;
         return description;
     }
 
-     void setDescription(String description) {
+    public  void setDescription(String description) {
         this.description = description;
     }
 
@@ -50,7 +50,7 @@ import java.util.Set;
         return tasks;
     }
 
-     void setTasks(Set<Task> tasks) {
+     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 }
