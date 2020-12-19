@@ -13,7 +13,7 @@ public class GroupReadModel {
     private LocalDateTime deadline;
     private Set<GroupTaskReadModel> tasks;
 
-    GroupReadModel(TaskGroup sorce)
+    public GroupReadModel(TaskGroup sorce)
     {
         this.description=sorce.getDescription();
        sorce.getTasks().stream().map(Task::getDeadline).max(LocalDateTime::compareTo).ifPresent(date -> deadline=date);

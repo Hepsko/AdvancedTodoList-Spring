@@ -13,7 +13,7 @@ import java.util.Optional;
 
     Page<Task> findAll(Pageable page);
 
-    Optional<Task> findById(Integer i);
+    Optional<Task> findById(Integer id);
 
     Task save(Task entity);
 
