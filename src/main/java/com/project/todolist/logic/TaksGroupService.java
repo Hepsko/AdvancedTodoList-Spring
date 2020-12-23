@@ -40,5 +40,6 @@ public void toggleGroup(int groupId) throws IllegalAccessException {
    TaskGroup result = repsitory.findById(groupId)
             .orElseThrow(()-> new IllegalArgumentException("TaskGroup not found"));
     result.setDone(!result.isDone());
+    repsitory.save(result);
 }
 }

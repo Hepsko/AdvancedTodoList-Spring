@@ -4,11 +4,13 @@ import com.project.todolist.TaskConfigurationProperties;
 import com.project.todolist.model.*;
 
 import com.project.todolist.model.projection.GroupReadModel;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ProjectService {
 private ProjectRepository repository;
 private TaskGroupRepository taskGroupRepository;
@@ -45,7 +47,8 @@ ProjectService(final ProjectRepository repository, final TaskGroupRepository tas
                                     deadline.plusDays(projectStep.getDaysToDeadline())
                             )
                     ).collect(Collectors.toSet()));
-                return taskGroup;
+            taskGroup.setProject(project);
+                return taskGroupRepository.save(taskGroup);
         }).orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
              return  new GroupReadModel(result);
