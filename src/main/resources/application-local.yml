@@ -3,7 +3,7 @@
       enabled: true
       path: '/console'
     datasource:
-          url: 'jdbc:h2:file:/home/hepsko/Projekty/todo-list/todo-db'
+          url: 'jdbc:h2:file:/home/hepsko/projekty/todo-list/todo-db'
     jpa:
       hibernate:
         ddl-auto: validate
