@@ -1,6 +1,7 @@
 package com.project.todolist.model.projection;
 
 import com.project.todolist.model.Task;
+import com.project.todolist.model.TaskGroup;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +25,8 @@ public class GroupTaskWriteModel {
         this.deadline = deadline;
     }
 
-    Task toTask()
+    Task toTask(TaskGroup group)
     {
-        return new Task(description,deadline);
+        return new Task(description,deadline, group);
     }
 }
