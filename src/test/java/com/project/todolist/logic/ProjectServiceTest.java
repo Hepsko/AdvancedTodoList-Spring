@@ -129,7 +129,7 @@ class ProjectServiceTest {
 
     private TaskConfigurationProperties configReturning(final boolean result) {
         var mockTemplate = mock(TaskConfigurationProperties.Template.class);
-        when(mockTemplate.isAllowallowMultipleTasks()).thenReturn(result);
+        when(mockTemplate.isAllowMultipleTasks()).thenReturn(result);
         var mockConfigurationProperties = mock(TaskConfigurationProperties.class);
         when(mockConfigurationProperties.getTemplate()).thenReturn(mockTemplate);
         return mockConfigurationProperties;

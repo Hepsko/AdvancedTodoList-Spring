@@ -16,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tasks")
 public class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
@@ -23,7 +24,7 @@ public class TaskController {
         this.repository=repository;
     }
 
-    @GetMapping(value = "/tasks", params = {"!sort", "!page", "!size"})
+    @GetMapping( params = {"!sort", "!page", "!size"})
     ResponseEntity<List<Task>> readAllTasks()
         {
             logger.warn("Exposing all the tasks!");
@@ -31,14 +32,14 @@ public class TaskController {
         }
 
 
-    @GetMapping("/tasks")
+    @GetMapping
     ResponseEntity<?> readAllTasks(Pageable page)
     {
         logger.info("Custrom pegeable");
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
 
-    @PutMapping("/tasks/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<?> updateTask(@PathVariable("id") int taskId,  @RequestBody @Valid  Task toUpdate)
     {
         if(!repository.existsById(taskId)) {
@@ -52,13 +53,13 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<?> getTask(@PathVariable("id") int taskId)
     {
-        return repository.findById(taskId).map(task -> ResponseEntity.ok(task)).orElse(ResponseEntity.notFound().build());
+        return repository.findById(taskId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/tasks")
+    @PostMapping
     ResponseEntity<?> createTask( @RequestBody @Valid  Task toCreate)
     {
     Task result = repository.save(toCreate);
@@ -66,7 +67,7 @@ public class TaskController {
     }
 
     @Transactional
-    @PatchMapping("/tasks/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> toggleTask(@PathVariable("id") int taskId)
     {
         if(!repository.existsById(taskId)) {
@@ -76,5 +77,13 @@ public class TaskController {
         repository.findById(taskId).ifPresent(task -> task.setDone(!task.isDone()));
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("search/done")
+    ResponseEntity<List<Task>> ReadDoneTask(@RequestParam(defaultValue = "true")   boolean state) {
+
+        return ResponseEntity.ok(repository.findByDone(state));
+
+    }
+
 
 }
