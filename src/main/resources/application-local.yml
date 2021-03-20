@@ -8,6 +8,12 @@
       hibernate:
         ddl-auto: validate
 
+   management:
+     endpoints:
+       web:
+         exposure:
+           include: "*"
+
 
 
 

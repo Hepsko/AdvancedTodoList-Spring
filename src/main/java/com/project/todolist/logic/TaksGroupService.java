@@ -14,23 +14,23 @@ import java.util.stream.Collectors;
 
 
 public class TaksGroupService {
-   private TaskGroupRepository repsitory;
+   private TaskGroupRepository repository;
     private TaskRepository taskRepository;
-TaksGroupService(final TaskGroupRepository repsitory, final TaskRepository taskRepository)
+TaksGroupService(final TaskGroupRepository repository, final TaskRepository taskRepository)
     {
-        this.repsitory=repsitory;
+        this.repository=repository;
         this.taskRepository=taskRepository;
     }
 
 public GroupReadModel createGroup(GroupWriteModel source)
     {
-        TaskGroup result= repsitory.save(source.toGroup());
+        TaskGroup result= repository.save(source.toGroup());
         return new GroupReadModel(result);
     }
 
-List<GroupReadModel> readAll()
+    public List<GroupReadModel> readAll()
     {
-        return repsitory.findAll().stream().map(GroupReadModel::new).collect(Collectors.toList());
+        return repository.findAll().stream().map(GroupReadModel::new).collect(Collectors.toList());
     }
 
 public void toggleGroup(int groupId) {
@@ -38,9 +38,9 @@ public void toggleGroup(int groupId) {
         {
             throw new IllegalStateException("Group has unclosed task. You must done all the tasks first!");
         }
-   TaskGroup result = repsitory.findById(groupId)
+   TaskGroup result = repository.findById(groupId)
             .orElseThrow(()-> new IllegalArgumentException("TaskGroup not found"));
     result.setDone(!result.isDone());
-    repsitory.save(result);
+    repository.save(result);
 }
 }

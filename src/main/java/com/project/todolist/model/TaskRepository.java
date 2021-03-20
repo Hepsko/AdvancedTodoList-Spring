@@ -23,4 +23,5 @@ import java.util.Optional;
 
      boolean existsByDoneIsFalseAndGroup_Id(Integer groupId);
 
+     List<Task> findAllByGroup_Id(Integer groupId);
  }
