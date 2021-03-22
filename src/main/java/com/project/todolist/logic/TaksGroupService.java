@@ -2,6 +2,7 @@ package com.project.todolist.logic;
 
 
 import com.project.todolist.TaskConfigurationProperties;
+import com.project.todolist.model.Project;
 import com.project.todolist.model.TaskGroup;
 import com.project.todolist.model.TaskGroupRepository;
 import com.project.todolist.model.TaskRepository;
@@ -24,7 +25,11 @@ TaksGroupService(final TaskGroupRepository repository, final TaskRepository task
 
 public GroupReadModel createGroup(GroupWriteModel source)
     {
-        TaskGroup result= repository.save(source.toGroup());
+        return createGroup(source,null);
+    }
+
+    GroupReadModel createGroup(final GroupWriteModel  source, final Project project) {
+        TaskGroup result= repository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 
@@ -43,4 +48,6 @@ public void toggleGroup(int groupId) {
     result.setDone(!result.isDone());
     repository.save(result);
 }
+
+
 }

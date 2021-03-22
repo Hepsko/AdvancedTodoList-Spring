@@ -6,6 +6,7 @@ import com.project.todolist.model.*;
 import com.project.todolist.model.projection.GroupReadModel;
 import com.project.todolist.model.projection.GroupTaskWriteModel;
 import com.project.todolist.model.projection.GroupWriteModel;
+import com.project.todolist.model.projection.ProjectWriteModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,9 +32,9 @@ ProjectService(final ProjectRepository repository, final TaskGroupRepository tas
         return repository.findAll();
     }
 
-    public Project save( final Project toSave)
+    public Project save( final ProjectWriteModel toSave)
     {
-        return repository.save(toSave);
+        return repository.save(toSave.toProject());
     }
 
     public GroupReadModel createGroup(int projectId, LocalDateTime deadline)
@@ -52,7 +53,7 @@ ProjectService(final ProjectRepository repository, final TaskGroupRepository tas
                task.setDeadline( deadline.plusDays(projectStep.getDaysToDeadline()));
                return task;
                    }).collect(Collectors.toSet()));
-         return   service.createGroup(taskGroup);
+         return   service.createGroup(taskGroup, project);
         }).orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
              return result;
